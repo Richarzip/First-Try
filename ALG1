@@ -1,0 +1,31 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//二分查找
+int get_target(const vector<int>& a/*动态数组作为参数*/ ,int target) {//const用作保护数组，使其不能被修改
+	int left = 0, right = a.size() - 1;//不用普通数组是因为这种形参表的函数中，若引入普通数组会自动退化为指针，无法在函数中计算数组大小（若）
+	while (left <= right) {
+		int middle = (right - left) / 2 + left;//这种写法防止right+left爆int
+		if (target < a[middle]) {//target小
+			right = middle - 1;
+		}
+		else if (target > a[middle]) {
+			left = middle + 1;
+		}
+		else {//此时target==a[middle]
+			return middle + 1;//这里返回的是次序而不是大小，可以根据具体情况进行变化
+		}
+	}
+	return -1;
+}
+
+int main()
+{
+	vector<int> nums = { 1,2,3,4,5,6,7,8,9,10 };//输入想要的数组
+	int target;//目标查找值
+	cin >> target;
+	cout << get_target(nums,target) << endl;
+
+	return 0;
+}
